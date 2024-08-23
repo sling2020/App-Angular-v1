@@ -17,5 +17,15 @@ jobs:
         run: |
           docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER__HUB_TOKEN }}
           docker push testcloud2024gcp/prueba:latest
-
+      - name: deploy to cluster
+        uses: nickgronow/kubectl@master
+        with:
+          config_data: ${{ secrets.kube_config }}
+          args: rollout restart deployment/deploy-front-sbx
+          # args: set image --record deployment/<my-deploy> <my-container>=<my-image>:<new-tag>
+      - name: Verify deployment
+        uses: nickgronow/kubectl@master
+        with:
+          config_data: ${{ secrets.kube_config }}
+          args: '"rollout status deployment/deploy-front-sbx"'
 
