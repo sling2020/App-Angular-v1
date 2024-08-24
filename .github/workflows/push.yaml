@@ -5,6 +5,14 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  GKE_CLUSTER: 'gke_porfolio-sbx_us-central1_portfolio-sbx' # TODO: update to your cluster name
+  GKE_ZONE: 'us-central1' # TODO: update to your cluster zone
+  DEPLOYMENT_NAME: 'gke-test' # TODO: update to your deployment name
+  REPOSITORY: 'samples' # TODO: update to your Artifact Registry docker repository name
+  IMAGE: 'static-site'
+  WORKLOAD_IDENTITY_PROVIDER: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider' # TODO: update to your workload identity provider
+
 jobs:
   publish_images:
     runs-on: ubuntu-latest
@@ -12,17 +20,40 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
       - name: build image
-        run: docker build . -t testcloud2024gcp/prueba:latest # --file Dockerfile --tag my-image-name:$(date +%s)
+        run: docker build . -t testcloud2024gcp/prueba:latest
+
       - name: push image to docker hub
         run: |
           docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER__HUB_TOKEN }}
           docker push testcloud2024gcp/prueba:latest
+
+      # Get the GKE credentials so we can deploy to the cluster
+      - name: 'Set up GKE credentials'
+        uses: 'google-github-actions/get-gke-credentials@6051de21ad50fbb1767bc93c11357a49082ad116' # google-github-actions/get-gke-credentials@v2
+        with:
+          cluster_name: '${{ env.GKE_CLUSTER }}'
+          location: '${{ env.GKE_ZONE }}'
+
+      # Deploy the Docker image to the GKE cluster
+      - name: 'Deploy to GKE'
+        run: |
+          kubectl rollout status deployment/deploy-front-sbx
+          kubectl get services -o wide
+
+
+
+
+
       - name: deploy to cluster
         uses: nickgronow/kubectl@master
         with:
           config_data: ${{ secrets.KUBE_CONFIG }}
           args: rollout restart deployment/deploy-front-sbx
-          # args: set image --record deployment/<my-deploy> <my-container>=<my-image>:<new-tag>
+
+
+
+
+
       - name: Verify deployment
         uses: nickgronow/kubectl@master
         with:
