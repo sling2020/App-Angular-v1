@@ -1,50 +1,50 @@
-name: 'Integration'
+# name: 'Integration'
 
-on:
-  push:
-    branches:
-      - 'main'
-  pull_request:
-    branches:
-      - 'main'
+# on:
+#   push:
+#     branches:
+#       - 'main'
+#   pull_request:
+#     branches:
+#       - 'main'
 
-# permissions:
-#   contents: 'read'
-#   id-token: 'write'
+# # permissions:
+# #   contents: 'read'
+# #   id-token: 'write'
 
-jobs:
-  publish-images:
-    runs-on: 'ubuntu-latest'
-    steps:
-      # - uses: 'actions/checkout@v4'
+# jobs:
+#   publish-images:
+#     runs-on: 'ubuntu-latest'
+#     steps:
+#       # - uses: 'actions/checkout@v4'
 
-      # - uses: 'actions/setup-node@v4'
-      #   with:
-      #     node-version: '20.x'
+#       # - uses: 'actions/setup-node@v4'
+#       #   with:
+#       #     node-version: '20.x'
 
-      # - name: 'npm build'
-      #   run: 'npm ci && npm run build'
+#       # - name: 'npm build'
+#       #   run: 'npm ci && npm run build'
 
-      - uses: 'google-github-actions/auth@v2'
-        with:
-          credentials_json: '${{ secrets.GKE_KEY }}'
-      - name: Instalar gcloud CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y apt-transport-https ca-certificates gnupg
-          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-          curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
-          sudo apt-get update && sudo apt-get install -y google-cloud-sdk
+#       - uses: 'google-github-actions/auth@v2'
+#         with:
+#           credentials_json: '${{ secrets.GKE_KEY }}'
+#       - name: Instalar gcloud CLI
+#         run: |
+#           sudo apt-get update
+#           sudo apt-get install -y apt-transport-https ca-certificates gnupg
+#           echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+#           curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+#           sudo apt-get update && sudo apt-get install -y google-cloud-sdk
 
-      - name: Autenticarse en GKE
-        run: |
-          gcloud auth activate-service-account --key-file="${{ secrets.GKE_KEY }}"
-          gcloud config set project porfolio-sbx
-          gcloud container clusters get-credentials porfolio-sbx --zone us-central1
+#       - name: Autenticarse en GKE
+#         run: |
+#           gcloud auth activate-service-account --key-file="${{ secrets.GKE_KEY }}"
+#           gcloud config set project porfolio-sbx
+#           gcloud container clusters get-credentials porfolio-sbx --zone us-central1
 
-      - name: Ejecutar comando en GKE
-        run: |
-          kubectl get all
+#       - name: Ejecutar comando en GKE
+#         run: |
+#           kubectl get all
 
         # - name: 'get-gke-credentials'
         #   uses: './'
