@@ -28,6 +28,23 @@ jobs:
       - uses: 'google-github-actions/auth@v2'
         with:
           credentials_json: '${{ secrets.GKE_KEY }}'
+    - name: Instalar gcloud CLI
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y apt-transport-https ca-certificates gnupg
+        echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+        curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+        sudo apt-get update && sudo apt-get install -y google-cloud-sdk
+
+    - name: Autenticarse en GKE
+      run: |
+        gcloud auth activate-service-account --key-file="${{ secrets.GCP_KEY }}"
+        gcloud config set project <tu-proyecto-id>
+        gcloud container clusters get-credentials <tu-cluster> --zone <tu-zona>
+
+    - name: Ejecutar comando en GKE
+      run: |
+        kubectl get all
 
       # - name: 'get-gke-credentials'
       #   uses: './'
@@ -36,8 +53,8 @@ jobs:
       #     cluster_name: 'portfolio-sbx'
       #     location: 'us-central1'
       #     use_connect_gateway: 'true'
-      #     namespace: 'default'
+      # #     namespace: 'default'
 
-      - name: 'kubectl'
-        run: |-
-          kubectl get ns
+      # - name: 'kubectl'
+      #   run: |-
+      #     kubectl get ns
