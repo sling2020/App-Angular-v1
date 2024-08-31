@@ -29,14 +29,14 @@ jobs:
         with:
           credentials_json: '${{ secrets.GKE_KEY }}'
 
-      - name: 'get-gke-credentials'
-        uses: './'
-        with:
-          project_id: 'porfolio-sbx'
-          cluster_name: 'portfolio-sbx'
-          location: 'us-central1'
-          use_connect_gateway: 'true'
-          namespace: 'default'
+      # - name: 'get-gke-credentials'
+      #   uses: './'
+      #   with:
+      #     project_id: 'porfolio-sbx'
+      #     cluster_name: 'portfolio-sbx'
+      #     location: 'us-central1'
+      #     use_connect_gateway: 'true'
+      #     namespace: 'default'
 
       - name: 'kubectl'
         run: |-
