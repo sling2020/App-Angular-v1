@@ -38,9 +38,9 @@ jobs:
 
       - name: Autenticarse en GKE
         run: |
-          gcloud auth activate-service-account --key-file="${{ secrets.GCP_KEY }}"
-          gcloud config set project <tu-proyecto-id>
-          gcloud container clusters get-credentials <tu-cluster> --zone <tu-zona>
+          gcloud auth activate-service-account --key-file="${{ secrets.GKE_KEY }}"
+          gcloud config set project porfolio-sbx
+          gcloud container clusters get-credentials porfolio-sbx --zone us-central1
 
       - name: Ejecutar comando en GKE
         run: |
