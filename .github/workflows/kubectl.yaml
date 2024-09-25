@@ -6,7 +6,8 @@ on:
       - 'main'
 
 jobs:
-    steps:
+  publish-images:
+    runs-on: 'ubuntu-latest'
       - uses: actions/checkout@v3
         name: Checkout repository
 
@@ -18,7 +19,7 @@ jobs:
           GKE_CLUSTER: portfolio-sbx
           GKE_ZONE: us-central1
     
-    - name: 'get-deployments'
-      shell: bash
-      run: |
-        kubectl get deployment -n my-namespacebectl get all
+      - name: 'get-deployments'
+        shell: bash
+        run: |
+          kubectl get deployment -n my-namespacebectl get all
