@@ -3,10 +3,9 @@ name: Deploy to Kubernetes
 on:
   push:
     branches:
-      - main
+      - 'main'
 
 jobs:
-  job_id:
     steps:
       - uses: actions/checkout@v3
         name: Checkout repository
