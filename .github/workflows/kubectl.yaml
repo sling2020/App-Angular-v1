@@ -6,20 +6,20 @@ on:
       - main
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
+  job_id:
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v3
+        name: Checkout repository
 
-      # Configura kubectl para conectarse a tu clúster
-      - name: Set up Kubernetes
-        uses: azure/k8s-set-context@v4
+      - name: Connect to GKE
+        uses: 'Swibi/connect-to-gke'
         with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.KUBE_CONFIG }}
-
-      # Ejecuta un comando en Kubernetes, por ejemplo, desplegar un pod
-      - name: Deploy to Kubernetes
-        run: kubectl get all
+          GCP_SA_KEY: ${{ secrets.GKE_KEY }}
+          GCP_PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+          GKE_CLUSTER: portfolio-sbx
+          GKE_ZONE: us-central1
+    
+    - name: 'get-deployments'
+      shell: bash
+      run: |
+        kubectl get deployment -n my-namespacebectl get all
