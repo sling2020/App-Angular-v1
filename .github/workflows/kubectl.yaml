@@ -1,0 +1,25 @@
+name: Deploy to Kubernetes
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Configura kubectl para conectarse a tu clúster
+      - name: Set up Kubernetes
+        uses: azure/k8s-set-context@v4
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+
+      # Ejecuta un comando en Kubernetes, por ejemplo, desplegar un pod
+      - name: Deploy to Kubernetes
+        run: kubectl get all
