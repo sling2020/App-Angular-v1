@@ -1,27 +1,27 @@
-# name: 'Deploy to Kubernetes'
+name: 'Deploy to Kubernetes'
 
-# on:
-#   push:
-#     branches:
-#       - 'main'
+on:
+  push:
+    branches:
+      - 'main'
 
-# jobs:
-#   update-deploy:
-#     runs-on: 'ubuntu-latest'
-#     steps:
-#       - uses: actions/checkout@v3
-#         name: Checkout repository
+jobs:
+  update-deploy:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout repository
 
-#       - name: Connect to GKE
-#         uses: 'Swibi/connect-to-gke'
-#         with:
-#           GCP_SA_KEY: ${{ secrets.GKE_KEY }}
-#           GCP_PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-#           GKE_CLUSTER: portfolio-sbx
-#           GKE_ZONE: us-central1
+      - name: Connect to GKE
+        uses: 'Swibi/connect-to-gke'
+        with:
+          GCP_SA_KEY: ${{ secrets.GKE_KEY }}
+          GCP_PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+          GKE_CLUSTER: portfolio-sbx
+          GKE_ZONE: us-central1
     
-#       - name: 'get-deployments'
-#         shell: bash
-#         run: |
-#           kubectl get deployment -n my-namespacebectl get all
+      - name: 'get-deployments'
+        shell: bash
+        run: |
+          kubectl get deployment -n my-namespacebectl get all
           
