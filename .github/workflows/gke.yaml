@@ -26,7 +26,7 @@ jobs:
         run: 'npm i && npm run build'
 
       - name: build image
-        run: docker build dist/. -t testcloud2024gcp/prueba:latest
+        run: docker build -t testcloud2024gcp/prueba:latest dist
 
       - name: push image to docker hub
         run: |
