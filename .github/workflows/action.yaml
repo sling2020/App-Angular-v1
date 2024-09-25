@@ -13,7 +13,7 @@ jobs:
         name: Checkout repository
 
       - name: Connect to GKE
-        uses: 'Swibi/connect-to-gke'
+        uses: ./ #'Swibi/connect-to-gke'
         with:
           GCP_SA_KEY: ${{ secrets.GKE_KEY }}
           GCP_PROJECT_ID: ${{ secrets.GKE_PROJECT }}
