@@ -25,6 +25,9 @@ jobs:
       - name: 'npm build'
         run: 'npm i && npm run build'
 
+      - name: File List
+        run: ls
+
       - name: build image
         run: docker build -t testcloud2024gcp/prueba:latest dist
 
