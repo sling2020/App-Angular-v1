@@ -49,7 +49,7 @@ jobs:
         # gcloud container clusters get-credentials portfolio-sbx --region=us-central1
       - name: Authenticate to Google Cloud
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}  # Ruta a las credenciales
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GKE_KEY }}  # Ruta a las credenciales
           run: |
             echo "${{ secrets.GKE_KEY }}" > $HOME/gcp-key.json
             gcloud auth activate-service-account --key-file=$HOME/gcp-key.json
