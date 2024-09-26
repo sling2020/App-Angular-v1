@@ -54,7 +54,7 @@ jobs:
           echo "${{ secrets.GKE_KEY }}" > $HOME/gcp-key.json
           gcloud auth activate-service-account --key-file=$HOME/gcp-key.json
           gcloud config set project portfolio-sbx
-          
+
       - name: Authenticate kubectl with GKE
         run: |
           gcloud container clusters get-credentials portfolio-sbx --region=us-central1
