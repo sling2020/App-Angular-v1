@@ -53,7 +53,7 @@ jobs:
         run: |
           echo "${{ secrets.GKE_KEY }}" > $HOME/gcp-key.json
           gcloud auth activate-service-account --key-file=$HOME/gcp-key.json
-          gcloud config set project YOUR_PROJECT_ID  # Reemplaza con tu ID de proyecto
+          gcloud config set project portfolio-sbx
           
       - name: Authenticate kubectl with GKE
         run: |
