@@ -50,10 +50,10 @@ jobs:
       - name: Authenticate to Google Cloud
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GKE_KEY }}  # Ruta a las credenciales
-          run: |
-            echo "${{ secrets.GKE_KEY }}" > $HOME/gcp-key.json
-            gcloud auth activate-service-account --key-file=$HOME/gcp-key.json
-            gcloud config set project YOUR_PROJECT_ID  # Reemplaza con tu ID de proyecto
+        run: |
+          echo "${{ secrets.GKE_KEY }}" > $HOME/gcp-key.json
+          gcloud auth activate-service-account --key-file=$HOME/gcp-key.json
+          gcloud config set project YOUR_PROJECT_ID  # Reemplaza con tu ID de proyecto
           
       - name: Authenticate kubectl with GKE
         run: |
