@@ -36,7 +36,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install google-cloud-cli
     
       - name: Init GCloud
-        run: gcloud init
+        run: gcloud init --no-launch-browser
       # - name: Add Google Cloud SDK repository
       #   run: |
       #     echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
