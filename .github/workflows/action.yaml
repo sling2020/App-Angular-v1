@@ -23,7 +23,20 @@ jobs:
           sudo apt-get install -y kubectl
           kubectl version --client
 
+      - name: gke console verify
+        run: sudo apt-get install apt-transport-https ca-certificates gnupg curl
 
+      - name: Importa public key Google cloud
+        run : curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
+      
+      - name: Add Uri GCP
+        run: echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+
+      - name: Install Gcloud CLI
+        run: sudo apt-get update && sudo apt-get install google-cloud-cli
+    
+      - name: Init GCloud
+        run: gcloud init
       # - name: Add Google Cloud SDK repository
       #   run: |
       #     echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
